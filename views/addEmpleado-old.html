@@ -1,0 +1,161 @@
+<div class="row" ng-show="emp.id_empresa">
+	<div class=" col-lg-4">
+		<img src="images/logo.jpg" width="75" height="55">
+	</div>
+	<div class=" col-lg-4 text-center">
+	</div>
+	<div class=" col-lg-4"></div>
+</div>
+
+<div class="row" ng-hide="emp.id_empresa">
+	<div class=" col-lg-4"></div>
+	<div class=" col-lg-4 text-center">
+		<img src="images/logo.jpg" width="300" height="220">
+	</div>
+	<div class=" col-lg-4"></div>
+</div>
+<hr>
+<h2>
+	<button type="button" onclick="goBack()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                	<i class="glyphicon glyphicon-chevron-left"></i>
+                </span>&nbspRegresar
+    </button>
+	Registro del Empleado
+</h2>
+
+<hr>
+
+
+
+
+<h4>
+	<!-- antes id="nEmpleado" -->
+	<input class="form-control input-lg" 	
+	ng-keydown="keypress($event)"
+	ng-model="empTmp"
+	id="nEmpleado"
+	type="text" placeholder="Numero del empleado">  
+	
+	
+</h4>
+
+<br><br>
+
+<div class="collapse" ng-show="emp.id">
+
+	<div class="row">
+
+		<div class="col-lg-4">
+			<h3>Seleccion el Turno</h3>
+			<ul>
+				<li>
+					<select>
+				  	  <option value="volvo">Turno 1</option>
+					  <option value="saab">Tueno 2</option>
+					  <option value="mercedes">Turno 3</option>
+					</select>
+				</li>
+			</ul>
+				
+			
+		</div>
+		<div class="col-lg-4 text-center"></div>
+		<div class="col-lg-4">
+
+			<h3>Seleccion el Horario</h3>
+				<ul>
+					<li>
+						<select>
+						  <option value="volvo">Horario A</option>
+						  <option value="saab">Horario B</option>
+						  <option value="mercedes">Horario C</option>
+						</select>
+					</li>
+				</ul>
+				
+		
+		</div>		
+	</div>
+
+	<div class="row">
+		<div class="clo-lg-12 text-center">
+			
+		</div>
+
+	</div>
+
+	<br><br><br>
+
+	<div class="row">	
+		<div class="col-lg-4">
+
+			<h3>No. Empleado: 
+				{{emp.id_empresa}}
+			</h3>
+			<ul>
+				<li>
+					Name: {{emp.fname}} {{emp.lname}}
+				</li>
+				<li>
+					Job: {{emp.job}}
+				</li>
+				<li>
+					Category: {{emp.category}}
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-lg-4 text-center">
+			<img src="images/right.png">
+		</div>
+		<div class="col-lg-4">
+			<h3>Area: Ensamble
+			</h3>
+			<ul>
+				<li>
+					Client: BMW
+				</li>
+				<li>
+					Celula: Cecula 1
+				</li>
+				
+			</ul>
+		</div>
+
+		
+	</div>
+
+	
+
+</div>
+
+
+<br>
+
+<div class="col-lg-8"> <hr></div>
+
+<div class="col-lg-2 text-center">
+	<button class="btn btn-primary btn-lg">Registrar</button>
+</div>
+<div class="col-lg-2">
+	<hr>
+</div>
+
+<!--
+<h3> {{area}} - - > {{cli}} - - > {{cel}}  {{id}} </h3>
+-->
+
+<script type="text/javascript">
+
+	$( "#nEmpleado" ).focus();
+
+	$( "#nEmpleado" ).on( "keydown", function(event) {
+      if(event.which == 13) 
+         //alert("Entered!");
+     	$('.collapse').collapse();
+     	$( "#nEmpleado" ).focus();
+    });
+</script>
+
+

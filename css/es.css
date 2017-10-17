@@ -1,0 +1,199 @@
+
+.progress{
+    height: 6px;
+    background: #fff;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 70px;
+    overflow: visible;
+}
+.progress .progress-bar{
+    box-shadow: none;
+    border-radius: 5px;
+    position: relative;
+    animation: animate-positive 2s;
+}
+.progress .progress-title{
+    padding: 3px 10px;
+    margin: 0;
+    min-width: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #282828;
+    line-height: 22px;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    background: #fff;
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.14);
+    position: absolute;
+    top: -10px;
+    left: 0;
+}
+.progress .progress-value{
+    width: 50px;
+    height: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 25px;
+    border-radius: 4px;
+    position: absolute;
+    top: -40px;
+    right: 0;
+}
+.progress.pink .progress-bar,
+.progress.pink .progress-value{ background: #ff007f; }
+.progress.green .progress-bar,
+.progress.green .progress-value{ background: #73cd21; }
+.progress.blue .progress-bar,
+.progress.blue .progress-value{ background: #2e9ce0; }
+.progress.yellow .progress-bar,
+.progress.yellow .progress-value{ background: #eea921; }
+@-webkit-keyframes animate-positive{
+    0%{ width: 0; }
+}
+@keyframes animate-positive{
+    0%{ width: 0; }
+}
+
+
+.notice {
+    padding: 15px;
+    background-color: #fafafa;
+    border-left: 6px solid #7f7f84;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+       -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+            box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+}
+.notice-sm {
+    padding: 10px;
+    font-size: 80%;
+}
+.notice-lg {
+    padding: 35px;
+    font-size: large;
+}
+.notice-success {
+    border-color: #80D651;
+}
+.notice-success>strong {
+    color: #80D651;
+}
+.notice-info {
+    border-color: #45ABCD;
+}
+.notice-info>strong {
+    color: #45ABCD;
+}
+.notice-warning {
+    border-color: #FEAF20;
+}
+.notice-warning>strong {
+    color: #FEAF20;
+}
+.notice-danger {
+    border-color: #d73814;
+}
+.notice-danger>strong {
+    color: #d73814;
+}
+
+.msg {
+    background: #fefefe;
+    color: #666666;
+    font-weight: bold;
+    font-size: small;
+    padding: 12px;
+    padding-left: 16px;
+    border-top: solid 8px #CCCCCC;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    -webkit-box-shadow: 0 10px 10px -5px rgba(0,0,0,.08);
+       -moz-box-shadow: 0 10px 10px -5px rgba(0,0,0,.08);
+            box-shadow: 0 10px 10px -5px rgba(0,0,0,.08);
+}
+.msg-clear {
+    border-color: #fefefe;
+    -webkit-box-shadow: 0 7px 10px -5px rgba(0,0,0,.15);
+       -moz-box-shadow: 0 7px 10px -5px rgba(0,0,0,.15);
+            box-shadow: 0 7px 10px -5px rgba(0,0,0,.15);
+}
+.msg-info {
+    border-color: #b8dbf2;
+}
+.msg-success {
+    border-color: #80D651;
+}
+.msg-warning {
+    border-color: rgba(255,165,0,.5);
+}
+.msg-danger {
+    border-color: #ec8282;
+}
+.msg-primary {
+    border-color: #9ca6f1;
+}
+.msg-magick {
+    border-color: #e0b8f2;
+}
+.msg-info-text {
+    color: #39b3d7;
+}
+.msg-success-text {
+    color: #80d651;
+}
+.msg-warning-text {
+    color: #db9e34;
+}
+.msg-danger-text {
+    color: #c9302c;
+}
+.msg-primary-text {
+    color: rgba(47,106,215,.9);
+}
+.msg-magick-text {
+    color: #bb39d7;
+}
+
+
+.wrimagecard{	
+	margin-top: 0;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    position: relative;
+    background: #fff;
+    box-shadow: 12px 15px 20px 0px rgba(46,61,73,0.15);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+.wrimagecard .fa{
+	position: relative;
+    font-size: 70px;
+}
+.wrimagecard-topimage_header{
+padding: 20px;
+}
+a.wrimagecard:hover, .wrimagecard-topimage:hover {
+    box-shadow: 2px 4px 8px 0px rgba(46,61,73,0.2);
+}
+.wrimagecard-topimage a {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.wrimagecard-topimage_title {
+    padding: 20px 24px;
+    height: 80px;
+    padding-bottom: 0.75rem;
+    position: relative;
+}
+.wrimagecard-topimage a {
+    border-bottom: none;
+    text-decoration: none;
+    color: #525c65;
+    transition: color 0.3s ease;
+}
+

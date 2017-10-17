@@ -1,0 +1,155 @@
+<div class="row">
+	<div class=" col-lg-4"></div>
+	<div class=" col-lg-4 text-center">
+		<img src="images/logo.jpg" width="150" height="110">
+	</div>
+	<div class=" col-lg-4"></div>
+</div>
+<hr>
+
+<dov class="row">
+	<div class="col-lg-4">
+		<!--
+		<input class="form-control input-lg" 	
+			type="text" placeholder="Area" ng-model="q.area"> 
+
+		-->
+		<select id="company" class="form-control">
+      		<option>Areas</option>
+      		<option>ENSAMBLE</option>
+      		<option>VULCANIZADO</option>
+      		<option>EXTRUSION</option>
+      		<option>PROTOTIPOS</option>
+    	</select> 
+    		
+	</div>
+	<div class="col-lg-4">
+		<!--
+		<input class="form-control input-lg" 	
+			type="text" placeholder="Cliente" ng-model="q.cli">
+		-->
+
+			<select id="company" class="form-control">
+      		<option>Clientes</option>
+      		<option>BMW</option>
+      		<option>VW</option>
+      		<option>POT 1</option>
+      		<option>POT 2</option>
+      		<option>Linea 1</option>
+      		<option>Linea 2</option>
+    	</select>
+	</div>
+	<div class="col-lg-4">
+		<!-- <input class="form-control input-lg" 	
+			type="text" placeholder="Celula" ng-model="q.cel">
+
+		-->
+
+		<select id="company" class="form-control">
+      		<option>Celulas</option>
+      		<option>Celula 1</option>
+      		<option>Celula 2</option>
+      		<option>Celula 3</option>
+      		<option>Celula 4</option>
+    	</select>
+    	
+
+	</div>
+</dov>
+
+<div class="row">
+	<div class="col-lg-6 text-center">
+		
+		<select class="form-control">
+			<option value="volvo">Turnos</option>
+			<option value="volvo">Turno 1</option>
+			<option value="saab">Tueno 2</option>
+			<option value="mercedes">Turno 3</option>
+		</select>
+
+	</div>
+	
+	<div class="col-lg-6 text-center">
+		
+		<select class="form-control">
+			<option value="volvo">Horarios</option>
+			<option value="a">Horario A</option>
+			<option value="b">Horario B</option>
+			<option value="c">Horario C</option>
+		</select>
+	</div>
+</div>
+
+<hr>
+
+<div class="row">
+	<div class="col-lg-8"></div>
+	<div class="col-lg-4 text-center">
+		<button class="btn btn-primary">Excel</button>
+	</div>
+</div>
+
+
+<!--
+
+<div class="row" ng-repeat="e in entradas | filterMultiple:{area:q.area, cliente:q.cli, celula:q.cel}">
+	<div class="col-lg-12" >
+
+		{{e.emp.id_empresa}} {{e.emp.lname}} {{e.emp.fname}} {{e.emp.job}} 
+		{{e.emp.category}} 
+	</div>
+	<div class="col-lg-12">
+		{{e.area}} {{e.cliente}} {{e.celula}} {{e.turno}} {{e.horario}} 
+	</div>
+	<div class="col-lg-12">
+		<hr>
+	</div>
+	
+</div>
+-->
+
+<div class="row">
+
+
+	<div class="col-lg-12">
+
+
+<table class="table table-bordered table-hover specialCollapse">
+      <thead>
+        <tr>
+          <th class="col-md-1"><small>ID</small></th>
+          <th class="col-md-4"><small>Nombre</small></th>
+          <th class="col-md-2"><small>Trabajo</small></th>
+          <th class="col-md-1"><small>Area</small></th>
+          <th class="col-md-1"><small>Cliente</small></th>
+          <th class="col-md-1"><small>Celula</small></th>
+          <th class="col-md-1"><small>Turno</small></th>
+          <th class="col-md-1"><small>Horario</small></th>
+        </tr>
+      </thead>
+      <tbody>
+
+
+        <tr ng-repeat="e in entradas | filterMultiple:{area:q.area, cliente:q.cli, celula:q.cel}">
+          <td><small>{{e.emp.id_empresa}} </small></td>
+          <td><small>{{e.emp.lname}} {{e.emp.fname}}</small></td>
+          <td><small>{{e.emp.job}}</small></td>
+          <td><small>{{e.area}} </small></td>
+          <td><small>{{e.cliente}}  </small></td>
+          <td><small>{{e.celula}} </small></td>
+          <td><small>{{e.turno}} </small></td>
+          <td><small>{{e.horario}} </small></td>
+        </tr>
+                
+                
+                
+      </tbody>
+    </table>
+
+
+	</div>
+
+</div>
+
+
+

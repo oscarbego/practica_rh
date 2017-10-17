@@ -1,0 +1,43 @@
+<div class="row">
+	<div class=" col-lg-4"></div>
+	<div class=" col-lg-4 text-center">
+		<img src="images/logo.jpg" width="230" height="200">
+	</div>
+	<div class=" col-lg-4"></div>
+</div>
+
+<div class="row">
+
+	<h2>
+		<button type="button" onclick="goBack()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                	<i class="glyphicon glyphicon-chevron-left"></i>
+                </span>&nbspRegresar
+        </button>
+		Detalle Cliente {{id}}
+	</h2>
+
+	<div class="col-lg-3 well" ng-repeat="c in celulas">
+		<div class="wrimagecard wrimagecard-topimage">
+	                  
+	                  <div class="wrimagecard-topimage_header" >
+	                    <center>
+	                        <!-- <img src="factory-128.png" class="center-block img-responsive">-->
+	                        
+	                        <h3>{{c.celula}}</h3>
+	                        
+	                        <h4>
+	                        	<a href="#/turnos/{{area}}/{{id}}/{{c.idCelula}}">
+		                            <div id="" class="notice notice-success">
+		                                <strong></strong> Registrarse <span></span>
+		                            </div>
+	                            </a>
+	                        </h4>
+	                    </center>
+	                  </div>
+	                  
+	    </div>
+		
+	</div>
+
+</div>

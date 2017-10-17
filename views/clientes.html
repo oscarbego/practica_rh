@@ -1,0 +1,53 @@
+
+<div class="row">
+	<div class=" col-lg-4"></div>
+	<div class=" col-lg-4 text-center">
+		<img src="images/logo.jpg" width="230" height="200">
+	</div>
+	<div class=" col-lg-4"></div>
+</div>
+<div class="row">
+
+	<div class=" col-lg-12">
+
+		<h2> 
+			<button type="button" onclick="goBack()" class="btn btn-labeled btn-default">
+                <span class="btn-label">
+                	<i class="glyphicon glyphicon-chevron-left"></i>
+                </span>&nbspRegresar
+            </button>
+            {{ClientName(area)}}
+			<span>Lista de Clientes:</span>
+		</h2>
+		<hr>
+		
+	</div>
+
+	
+	<any ng-repeat="cli in clientes">
+		<div  class="col-md-3" >
+	              <div class="wrimagecard wrimagecard-topimage">
+	                  
+	                  <div class="wrimagecard-topimage_header" >
+	                    <center>
+	                        <!--<img src="factory-128.png" class="center-block img-responsive">-->
+
+	                        <h3>{{cli.cliente}}</h3>
+	                        
+	                        <h4>
+	                        	<a href="#/detalleCli/{{area}}/{{cli.id}}">
+		                            <div id="" class="notice notice-success">
+		                                <strong></strong> Seleccionar <span></span>
+		                            </div>
+	                            </a>
+	                        </h4>
+	                    </center>
+	                  </div>
+	                  
+	              </div>
+	    </div>
+    </any>
+
+
+</div>
+
