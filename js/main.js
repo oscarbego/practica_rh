@@ -186,6 +186,20 @@ rh.controller('addCliente', function($scope, rhData, $http) {
   
   $scope.mgs = "";
 
+  $scope.clientesArea = [];
+
+  $scope.selectArea = function (idArea){
+
+    $http.get("rest/" + idArea + "/clientes").success(
+    function (data){
+
+      console.log(data);
+      $scope.clientesArea = data;
+    }
+    );
+  }
+
+
 
   ///add/cliente/:area/:cli'
   $scope.save = function(){
@@ -238,6 +252,18 @@ rh.controller('addCelula', function($scope, rhData, $http) {
 
       console.log(data);
       $scope.clientes = data;
+    }
+  );
+}
+
+
+$scope.selectCli = function (idCli){
+
+    $http.get("rest/" + idCli + "/celulas").success(
+    function (data){
+
+      console.log(data);
+      $scope.celulasCli = data;
     }
   );
   }

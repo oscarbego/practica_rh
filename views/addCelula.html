@@ -8,11 +8,18 @@ Lista de areas:
 <br>
 
 Lista de Clientes:
-<select ng-model="celula.idCli">
+<select ng-model="celula.idCli" ng-change="selectCli(celula.idCli)">
         <option ng-repeat="x in clientes" value="{{x.id}}">{{x.cliente}}</option>
 </select>
 
+<br><br>
+Lista de celulas por cliente:
 
+<ul>
+    <li ng-repeat="cel in celulasCli">
+        {{cel.celula}}        
+    </li>
+</ul>
 
 <br><br>
 Nombre Celula: <input type="text" ng-model="celula.nom">
