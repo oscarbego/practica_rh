@@ -5,7 +5,17 @@ require 'Slim/Slim.php';
 $app = new Slim();
 
 $app->get('/areas', 'getAreas');
+
+$app->get('/add/cliente/:area/:cli', 'addCli');
+
+$app->get('/add/celula/:cli/:cel', 'addCel');
+
 $app->get('/clientes', 'getClientes');
+
+$app->get('/:area/clientes', 'getClientesArea');
+
+
+
 $app->get('/turnos', 'getTurnos');
 $app->get('/celulas', 'getCelulas');
 
@@ -13,8 +23,19 @@ $app->get('/vista', 'getVista');
 
 
 
+$app->get('/addRhEmployee/:idEmpl/:idCel/:idHorario', 'upDateRhEmployee');
+$app->get('/rh_employee/:id', 'getRhEmployee');
+
+$app->get('/rh_employees', 'getRhEmployees');
+
+//$app->get('/rh_employees/:area', 'getRhEmployees');
+//$app->get('/rh_employees/:area/:cli', 'getRhEmployees');
+//$app->get('/rh_employees/:area/:cli/:cel', 'getRhEmployees');
+
+
+
 $app->get('/employee/:id', 'getEmployee');
-$app->get('/employees', 'getEmployees');
+
 
 $app->get('/ver/:area/:cli/:turno', 'verAreaCliTurn');
 
@@ -27,9 +48,6 @@ $app->get('/ver/:area', 'verArea');
 
 
 
-
-
-
 $app->get('/addProds', 'addProd');
 
 $app->get('/wines', 'getWines');
@@ -39,7 +57,142 @@ $app->post('/wines', 'addWine');
 $app->put('/wines/:id', 'updateWine');
 $app->delete('/wines/:id',	'deleteWine');
 
+
+
 $app->run();
+
+
+function getClientesArea($area)
+{
+        $sql = 'select * from rh_tristone.clientes where areas_id = ' . $area;
+        try {
+                $db = getConnection();
+                $stmt = $db->query($sql);  
+                $clientes = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $db = null;
+                echo json_encode($clientes);
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+function getRhEmployee($id)
+{
+        $sql = 'select * from rh_tristone.employees 
+                                where id_empresa = "' . $id . '"';
+        try {
+                $db = getConnection();
+                $stmt = $db->query($sql);  
+                $emp = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $db = null;
+                echo json_encode($emp);
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+function getRhEmployees()
+{
+        $sql = 'select * from rh_tristone.vw_relacion_emp';
+        try {
+                $db = getConnection();
+                $stmt = $db->query($sql);  
+                $emp = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $db = null;
+                echo json_encode($emp);
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
+
+
+//$app->get('/add/celula/:cli/:cel', 'addCel');
+function addCel($cel, $cli)
+{	 
+	       //INSERT INTO `rh_tristone`.`celulas` (`celula`, `clientes_id`) VALUES ('test', '28');
+	 $sql = "INSERT INTO `rh_tristone`.`celulas` (`celula`, `clientes_id`) VALUES ('". $cel ."', '". $cli ."');";
+
+        try {
+		
+				$db = getConnection();	
+				$stmt = $db->prepare($sql);  
+				$stmt->execute();
+				$db = null;
+				echo '{"msg":"Save Ok"}';
+
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() . ' ' . $sql . ' }}'; 
+        }  
+}
+
+
+function addCli($area, $cli)
+{	 
+	 $sql = "INSERT INTO `rh_tristone`.`clientes` (`cliente`, `areas_id`) VALUES ('". $cli ."', '". $area ."');";
+
+        try {
+		
+				$db = getConnection();	
+				$stmt = $db->prepare($sql);  
+				$stmt->execute();
+				$db = null;
+				echo '{"msg":"Save Ok"}';
+
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }  
+}
+
+
+function addRhEmployee($idEmpl, $idCel, $idHorario)
+{
+ 
+	 $memo = isset($_GET['memo']) ? $_GET['memo'] : "";
+
+	 //      INSERT INTO `emp_hr_cel` (`celulas_id`, `horarios_id`, `employees_id`, `memo`) VALUES ('1', '1', '28', 'Sr. Oso');
+	 $sql = "INSERT INTO `emp_hr_cel` (`celulas_id`, `horarios_id`, `employees_id`, `memo`) VALUES ('" . $idCel . "', '" . $idHorario . "', '" . $idEmpl . "', '" . $memo . "');";
+
+        try {
+		
+				$db = getConnection();	
+				$stmt = $db->prepare($sql);  
+				$stmt->execute();
+				$db = null;
+				echo '{"msg":"Save Ok"}';
+
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }  
+}
+
+
+function deleteRhEmployee($idEmpl)
+{
+	$sql = "delete from `emp_hr_cel` where  `employees_id` = '" . $idEmpl . "';";
+
+        try {
+		
+				$db = getConnection();	
+				$stmt = $db->prepare($sql);  
+				$stmt->execute();
+				$db = null;
+				echo '{"msg":"Delete Ok"}';
+
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        } 
+}
+
+function upDateRhEmployee($idEmpl, $idCel, $idHorario)
+{
+	echo "[";
+	deleteRhEmployee($idEmpl);
+	echo ", ";
+	addRhEmployee($idEmpl, $idCel, $idHorario);
+	echo "]";
+}
+
+
 
 
 function getEmployee($id)
@@ -57,19 +210,6 @@ function getEmployee($id)
         }
 }
 
-function getEmployees()
-{
-        $sql = 'select * from rh_tristone.employees';
-        try {
-                $db = getConnection();
-                $stmt = $db->query($sql);  
-                $emp = $stmt->fetchAll(PDO::FETCH_OBJ);
-                $db = null;
-                echo json_encode($emp);
-        } catch(PDOException $e) {
-                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
-        }
-}
 
 function getAreas()
 {
@@ -594,7 +734,7 @@ function getConnection() {
 	
 	
 	$dbuser="root";
-	$dbpass="toor";
+	$dbpass="root";
 	$dbname="rh_tristone";
 	$dbhost="localhost";
 	

@@ -1,0 +1,23 @@
+<h2>Agregar Celula a Cliente</h2>
+
+Lista de areas:
+<select ng-model="cliente.idArea" ng-change="selectArea(cliente.idArea)">
+        <option ng-repeat="x in areas" value="{{x.id}}">{{x.area}}</option>
+</select>
+
+<br>
+
+Lista de Clientes:
+<select ng-model="celula.idCli">
+        <option ng-repeat="x in clientes" value="{{x.id}}">{{x.cliente}}</option>
+</select>
+
+
+
+<br><br>
+Nombre Celula: <input type="text" ng-model="celula.nom">
+<hr>
+<button ng-click="save()">Save</button>
+
+<hr>
+<h2>{{msg}}</h2>

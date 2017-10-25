@@ -1,4 +1,4 @@
-var rh = angular.module('rh', []);
+var rh = angular.module('rh', ['export.csv']);
 
 
 
@@ -10,6 +10,21 @@ rh.config(function($routeProvider) {
                       ,controller: 'home'                      
                     }
               )
+
+
+          .when('/addCliente', 
+                    {
+                      templateUrl: 'views/addCliente.html'
+                      ,controller: 'addCliente'                      
+                    }
+              )
+
+          .when('/addCelula', 
+                    {
+                      templateUrl: 'views/addCelula.html'
+                      ,controller: 'addCelula'                      
+                    }
+              )    
 
           .when('/clientes/:area', 
                     {
@@ -102,6 +117,31 @@ rh.config(function($routeProvider) {
 
 
 
+rh.factory('Excel',function($window){
+		var uri='data:application/vnd.ms-excel;base64,',
+			template='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+			base64=function(s){return $window.btoa(unescape(encodeURIComponent(s)));},
+			format=function(s,c){return s.replace(/{(\w+)}/g,function(m,p){return c[p];})};
+		return {
+			tableToExcel:function(tableId,worksheetName){
+				var table=$(tableId),
+					ctx={worksheet:worksheetName,table:table.html()},
+					href=uri+base64(format(template,ctx));
+				return href;
+			}
+		};
+	})
+	.controller('MyCtrl',function(Excel,$timeout){
+	  $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+			$scope.exportHref=Excel.tableToExcel(tableId,'sheet name');
+			$timeout(function(){location.href=$scope.fileData.exportHref;},100); // trigger download
+		}
+	});
+
+
+
+
+
 rh.factory('rhData', function($rootScope, $http) {
 
     var obj = {};
@@ -138,6 +178,94 @@ rh.factory('rhData', function($rootScope, $http) {
 
     return obj;
 });
+
+
+
+
+rh.controller('addCliente', function($scope, rhData, $http) {
+  
+  $scope.mgs = "";
+
+
+  ///add/cliente/:area/:cli'
+  $scope.save = function(){
+
+    $http.get("rest/add/cliente/"+$scope.cliente.idArea+"/"+$scope.cliente.nom).success(
+      function(data){
+        console.log(data);
+        $scope.msg = data.msg;
+      }
+    );
+  }
+
+  $scope.areas = [];
+
+  $http.get("rest/areas").success(
+    function (data){
+
+      console.log(data);
+      $scope.areas = data;
+    }
+  );
+
+
+});
+
+
+
+
+rh.controller('addCelula', function($scope, rhData, $http) {
+  
+  
+  $scope.areas = [];
+  $scope.clientes = [];
+
+  $scope.msg = "";
+
+  $http.get("rest/areas").success(
+    function (data){
+
+      console.log(data);
+      $scope.areas = data;
+    }
+  );
+
+
+  $scope.selectArea = function (idArea){
+
+    $http.get("rest/" + idArea + "/clientes").success(
+    function (data){
+
+      console.log(data);
+      $scope.clientes = data;
+    }
+  );
+  }
+
+  
+
+  $scope.save = function(){
+
+    console.log("rest/add/celula/"+$scope.celula.nom+"/"+$scope.celula.idCli);
+
+    
+    $http.get("rest/add/celula/"+$scope.celula.nom+"/"+$scope.celula.idCli).success(
+      function(data){
+        
+        console.log(data);
+        $scope.msg = data.msg;
+      }
+    );
+    
+  }
+
+  
+
+  
+
+
+});
+
 
 
 rh.controller('index', function($scope, rhData) {
@@ -209,8 +337,15 @@ rh.filter('unique', function() {
     };
 });
 
-rh.controller('find', function($scope, rhData, $http) {
+rh.controller('find', function($scope, rhData, $http, Excel, $timeout) {
   console.log("find!!");
+
+
+  $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+			$scope.exportHref=Excel.tableToExcel(tableId,'sheet name');
+      console.log($scope.exportHref);
+			$timeout(function(){location.href=$scope.fileData.exportHref;}, 100); // trigger download
+	}
 
   $scope.q = {};
   $scope.q.area = "Areas";
@@ -228,34 +363,42 @@ rh.controller('find', function($scope, rhData, $http) {
 
     console.log("loadQ");
 
-    $http.get("rest/ver/" + $scope.area + "/" + $scope.id).success(
+    console.log("http://localhost:8888/rh_tristone/app/rest/rh_employees");
+    $http.get("rest/rh_employees").success(
       function (data) {
-        //$scope.entradas = data;
+        console.log("loadQ");
+        $scope.entradas = data;
         console.log(data);
+
+        $scope.clientes = ["Clientes"];
+
+
+        for (var i = 0; i < $scope.entradas.length; i++) {
+          
+          if( $scope.clientes.indexOf($scope.entradas[i].cliente) == -1 )
+            $scope.clientes.push($scope.entradas[i].cliente);
+          
+        }
+
+        $scope.celulas = ["Celulas"];
+        for (var i = 0; i < $scope.entradas.length; i++) {
+          
+          if( $scope.celulas.indexOf($scope.entradas[i].celula) == -1 )
+            $scope.celulas.push($scope.entradas[i].celula);
+          
+        }
+
       }
     );
 
-    $scope.clientes = ["Clientes"];
-    for (var i = 0; i < $scope.entradas.length; i++) {
-      
-      if( $scope.clientes.indexOf($scope.entradas[i].cliente) == -1 )
-        $scope.clientes.push($scope.entradas[i].cliente);
-      
-    }
 
-    $scope.celulas = ["Celulas"];
-    for (var i = 0; i < $scope.entradas.length; i++) {
-      
-      if( $scope.celulas.indexOf($scope.entradas[i].celula) == -1 )
-        $scope.celulas.push($scope.entradas[i].celula);
-      
-    }
-
+    
 
 
   }
 
 
+  $scope.loadQ();
 
   $scope.entradas = [
     {
@@ -483,7 +626,11 @@ rh.controller('horarios', function($scope, rhData, $routeParams, $http) {
 });
 
 
-rh.controller('addEmpleado', function($scope, rhData, $routeParams, $http) {
+rh.controller('addEmpleado', function($scope, rhData, $routeParams, $http, $location) {
+
+
+  console.log("$idEmpl, $idCel, $idHorario, 152755");
+  console.log("http://localhost:8888/rh_tristone/app/rest/addRhEmployee/14/1/1");
 
   $scope.area = $routeParams.area;
   $scope.cli = $routeParams.cli;
@@ -491,25 +638,67 @@ rh.controller('addEmpleado', function($scope, rhData, $routeParams, $http) {
 
   $scope.turno = $routeParams.turno;
   $scope.horario = $routeParams.horario;
-  
+  $scope.memo = "";
+
+  $scope.idEmpleado = "";
+
+  console.log("area: " + $scope.area);
+  console.log("cli: " + $scope.cli);
+  console.log("cel: " + $scope.cel);
+  console.log("turno: " + $scope.turno);
+  console.log("horario: " + $scope.horario);
+
+
+
+  $scope.validar = function(){
+
+    console.log("rest/addRhEmployee/" + 
+      $scope.idEmpleado + "/" + $scope.cel + "/" + 
+      $scope.horario + "?memo="+$scope.memo);
+    
+    $http.get(
+      "rest/addRhEmployee/" + 
+      $scope.idEmpleado + "/" + $scope.cel + "/" + 
+      $scope.horario + "?memo="+$scope.memo
+    ).success(
+        function (data) {
+          
+          console.log(data);
+          $location.path('/');
+        }
+      );
+      
+  }
+
   $scope.keypress = function($event) {
-    console.log("keypress");
+    //console.log("keypress");
     if ($event.which === 13) //rh/app/rest/employee/28
       $http.get("rest/employee/" + $scope.empTmp ).success(
         function (data) {
       
-          console.log(data);
-          $scope.emp = data[0];
+          if(data.length > 0){
+
+            console.log(data);
+            $scope.emp = data[0];
+
+            $scope.idEmpleado = $scope.emp.id;
+            console.log("--> " + $scope.idEmpleado);
+            
+            //$scope.empTmp = "";
+          }
+          else{
+
+            //$scope.msg = "No se encontro el empleado";
+          }
+
           $scope.empTmp = "";
-      }
-  );
 
-
+        }
+      );
 }
   
 
 });
-
 
 
 

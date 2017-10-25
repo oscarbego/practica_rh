@@ -151,14 +151,11 @@
 	<div class="col-lg-12">
 		<div class="form-group">
                 <label for="comment">Comentario:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <textarea class="form-control" rows="5" id="comment" ng-model="memo"></textarea>
             </div>
 	</div>
 </div>
 	
-
-</div>
-
 
 
 <br>
@@ -166,11 +163,16 @@
 <div class="col-lg-8"> <hr></div>
 
 <div class="col-lg-2 text-center">
-	<button class="btn btn-primary btn-lg">Registrar</button>
+	<button class="btn btn-primary btn-lg" ng-click="validar()">Validar</button>
 </div>
 <div class="col-lg-2">
 	<hr>
 </div>
+
+
+</div>
+
+
 
 <!--
 <h3> {{area}} - - > {{cli}} - - > {{cel}}  {{id}} </h3>
@@ -187,6 +189,5 @@
      	$( "#nEmpleado" ).focus();
     });
 </script>
-
 
 

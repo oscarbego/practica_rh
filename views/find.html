@@ -94,7 +94,7 @@
 <div class="row">
 	<div class="col-lg-8"></div>
 	<div class="col-lg-4 text-center">
-		<button class="btn btn-primary">Excel</button>
+		<!-- <button class="btn btn-primary">Excel</button> -->
 	</div>
 </div>
 
@@ -123,31 +123,33 @@
 	<div class="col-lg-12">
 
 
-<table class="table table-bordered table-hover specialCollapse">
+<table id="example" class="table table-bordered table-hover specialCollapse">
       <thead>
         <tr>
           <th class="col-md-1"><small>ID</small></th>
-          <th class="col-md-4"><small>Nombre</small></th>
+          <th class="col-md-3"><small>Nombre</small></th>
           <th class="col-md-2"><small>Trabajo</small></th>
           <th class="col-md-1"><small>Area</small></th>
           <th class="col-md-1"><small>Cliente</small></th>
           <th class="col-md-1"><small>Celula</small></th>
           <th class="col-md-1"><small>Turno</small></th>
           <th class="col-md-1"><small>Horario</small></th>
+		  <th class="col-md-1"><small>Observaciones</small></th>
         </tr>
       </thead>
       <tbody>
 
 
         <tr ng-repeat="e in entradas | filterMultiple:{area:q.area, cliente:q.cli, celula:q.cel, turno:q.turnos, horario:q.horarios}">
-          <td><small>{{e.emp.id_empresa}} </small></td>
-          <td><small>{{e.emp.lname}} {{e.emp.fname}}</small></td>
-          <td><small>{{e.emp.job}}</small></td>
+          <td><small>{{e.id_empresa}} </small></td>
+          <td><small>{{e.lname}} {{e.fname}}</small></td>
+          <td><small>{{e.job}}</small></td>
           <td><small>{{e.area}} </small></td>
           <td><small>{{e.cliente}}  </small></td>
           <td><small>{{e.celula}} </small></td>
           <td><small>{{e.turno}} </small></td>
           <td><small>{{e.horario}} </small></td>
+		  <td><small>{{e.memo}} </small></td>
         </tr>
                 
                 
@@ -160,5 +162,32 @@
 
 </div>
 
+	     
 
+<script>	
 
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        columns: [
+            { data: 'ID' },
+            { data: 'Nombre' },
+            { data: 'Trabajo' },
+            { data: 'Area' },
+            { data: 'Cliente' },
+			{ data: 'Celula' },
+			{ data: 'Turno' },
+			{ data: 'Horario' },
+			{ data: 'Observaciones' }
+        ],
+        buttons: [
+            
+            {
+                extend: 'excelHtml5',
+                exportOptions: { orthogonal: 'export' }
+            }
+        ]
+    } );
+} );
+
+</script>
