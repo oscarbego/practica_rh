@@ -1,9 +1,18 @@
 <h2>Agregar Cliente a Area</h2>
 
 Lista de areas:
-<select ng-model="cliente.idArea">
+<select ng-model="cliente.idArea" ng-change="selectArea(cliente.idArea)">
         <option ng-repeat="x in areas" value="{{x.id}}">{{x.area}}</option>
 </select>
+
+<br><br>
+Lista de clientes por area:
+
+<ul>
+    <li ng-repeat="cli in clientesArea">
+        {{cli.cliente}}        
+    </li>
+</ul>
 
 <br><br>
 Nombre Area: <input type="text" ng-model="cliente.nom">

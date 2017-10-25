@@ -14,6 +14,8 @@ $app->get('/clientes', 'getClientes');
 
 $app->get('/:area/clientes', 'getClientesArea');
 
+$app->get('/:cli/celulas', 'getCelulasCliente');
+
 
 
 $app->get('/turnos', 'getTurnos');
@@ -61,6 +63,21 @@ $app->delete('/wines/:id',	'deleteWine');
 
 $app->run();
 
+
+
+function getCelulasCliente($cli)
+{
+        $sql = 'select * from rh_tristone.celulas where clientes_id = ' . $cli;
+        try {
+                $db = getConnection();
+                $stmt = $db->query($sql);  
+                $celulas = $stmt->fetchAll(PDO::FETCH_OBJ);
+                $db = null;
+                echo json_encode($celulas);
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() .'}}'; 
+        }
+}
 
 function getClientesArea($area)
 {
