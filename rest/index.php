@@ -751,7 +751,7 @@ function getConnection() {
 	
 	
 	$dbuser="root";
-	$dbpass="toor";
+	$dbpass="root";
 	$dbname="rh_tristone";
 	$dbhost="localhost";
 	
