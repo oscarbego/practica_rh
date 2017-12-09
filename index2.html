@@ -59,7 +59,7 @@
     
 
 </head>
-<body>
+<body ng-controller="ctrlIndex">
 
 
 <!--
@@ -143,9 +143,17 @@
 							<ul class="nav navbar-nav">
 								<li class="active"><a href="#/"><span class="glyphicon glyphicon-dashboard"></span> Inicio</a>
 								</li>
-
+								<li ng-repeat="a in menu_areas">
+									<a href="#/clientes/{{a.id}}">
+										<span class="glyphicon glyphicon-cog"></span> 
+										{{a.area}}
+									</a>
+								</li>
+								
+								<!--
 								<li><a href="#/clientes/1"><span class="glyphicon glyphicon-plane"></span> Ensamble</a></li>
 								<li><a href="#/clientes/2"><span class="glyphicon glyphicon-cloud"></span> Vulcanizado</a></li>
+								-->
 
 								<!--
 								<!- - Dropdown- ->
@@ -184,17 +192,24 @@
 
 								-->
 
+								<!--
 								<li><a href="#/clientes/3"><span class="glyphicon glyphicon-signal"></span> Extrusion</a>
 								</li>
 
 								<li><a href="#/clientes/4"><span class="glyphicon glyphicon-signal"></span> Prototipos</a>
 								</li>
 
-								<li><a href="#/find"><span class="glyphicon glyphicon-cloud"></span> Find</a></li>
+								-->
+
+								<li><a href="#/find"><span class="glyphicon glyphicon-search"></span> Find</a></li>
 								
-								<li><a href="#/addCliente"><span class="glyphicon glyphicon-cloud"></span> Agregar Cliente</a></li>
+								<li><a href="#/addArea"><span class="glyphicon glyphicon-download-alt"></span> Agregar Area</a></li>
 								
-								<li><a href="#/addCelula"><span class="glyphicon glyphicon-cloud"></span> Agregar Celula</a></li>
+								<li><a href="#/addCliente"><span class="glyphicon glyphicon-download-alt"></span> Agregar Cliente</a></li>
+								
+								<li><a href="#/addCelula"><span class="glyphicon glyphicon-download-alt"></span> Agregar Celula</a></li>
+								
+								
 								<!--
 								<li>
 									<a href="#/proto">

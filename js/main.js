@@ -11,6 +11,13 @@ rh.config(function($routeProvider) {
                     }
               )
 
+          .when('/addArea', 
+                    {
+                      templateUrl: 'views/addArea.html'
+                      ,controller: 'addArea'                      
+                    }
+              )
+
 
           .when('/addCliente', 
                     {
@@ -142,11 +149,11 @@ rh.factory('Excel',function($window){
 
 
 
+
+
 rh.factory('rhData', function($rootScope, $http) {
 
     var obj = {};
-
-   
 
   obj.broadcastItem = function(event) {
     
@@ -173,12 +180,64 @@ rh.factory('rhData', function($rootScope, $http) {
         	  );
       
   };
-  
-  
 
     return obj;
 });
 
+
+//ctrlIndex
+
+rh.controller("ctrlIndex", function($scope, rhData, $http){
+
+  $scope.menu_areas = [];
+
+  $http.get("rest/areas").success(
+      function (data) {
+       
+       console.log("index");
+        console.log(data);
+        $scope.menu_areas = data;
+      }
+    );
+});
+
+
+
+rh.controller('addArea', function($scope, rhData, $http) {
+  
+  $scope.mgs = "";
+
+  $scope.areas = [];
+
+  $scope.loadAreas = function (){
+
+    $http.get("rest/areas").success(
+      function (data){
+
+        console.log(data);
+        $scope.areas = data;
+      }
+    );
+  }
+
+
+  $scope.loadAreas();
+
+  ///add/cliente/:area/:cli'
+  $scope.save = function(){
+
+    $http.get("rest/add/area/" + $scope.area.nom).success(
+      function (data){
+
+        console.log(data);
+        $scope.msg = data;
+        $scope.loadAreas();
+      }
+    );
+  }
+
+
+});
 
 
 
@@ -363,9 +422,29 @@ rh.filter('unique', function() {
     };
 });
 
+
+
+
+
+
+
+
+
 rh.controller('find', function($scope, rhData, $http, Excel, $timeout) {
   console.log("find!!");
 
+  $scope.filtrar = function(campo, filtro, lista){
+
+    var arrResu = [];
+
+    for (var i = 0; i < lista.length; i++) {
+          
+          if( $scope.clientes.indexOf($scope.entradas[i].cliente) == -1 )
+            $scope.clientes.push($scope.entradas[i].cliente);
+          
+    }
+
+  }
 
   $scope.exportToExcel=function(tableId){ // ex: '#my-table'
 			$scope.exportHref=Excel.tableToExcel(tableId,'sheet name');
@@ -385,15 +464,124 @@ rh.controller('find', function($scope, rhData, $http, Excel, $timeout) {
   $scope.q.turnos = "Turnos";
   $scope.q.horarios = "Horarios";
 
+
+
+
+  $scope.myForArea = function(){
+
+    $scope.entradas = $scope.entradasR;
+    
+    return $scope.entradas.filter(function( obj ) {
+          return obj.area == $scope.q.area;
+        });
+  }
+
+  $scope.myForAreaWr = function(){
+
+    console.log("myForAreaWr");
+    
+    $scope.entradas = $scope.myForArea();
+
+    // -----------------------------
+
+      $scope.clientes = ["Clientes"];
+      for (var i = 0; i < $scope.entradas.length; i++) {
+          
+          if( $scope.clientes.indexOf($scope.entradas[i].cliente) == -1 )
+            $scope.clientes.push($scope.entradas[i].cliente);
+          
+        }
+
+        $scope.celulas = ["Celulas"];
+        for (var i = 0; i < $scope.entradas.length; i++) {
+          
+          if( $scope.celulas.indexOf($scope.entradas[i].celula) == -1 )
+            $scope.celulas.push($scope.entradas[i].celula);
+          
+        }
+    // -----------------------------
+    console.log($scope.entradas);
+  }
+
+  // --------------------
+
+$scope.myForCli = function(){
+
+    return $scope.entradas.filter(function( obj ) {
+          return obj.cliente == $scope.q.cli;
+        });
+  }
+
+  $scope.myForCliWr = function(){
+
+    $scope.myForAreaWr();
+    $scope.entradas = $scope.myForCli();
+    console.log($scope.entradas);
+  }
+
+  // --------------------
+
+  $scope.myForCel = function(){
+
+    return $scope.entradas.filter(function( obj ) {
+          return obj.celula == $scope.q.cel;
+        });
+  }
+
+  $scope.myForCelWr = function(){
+
+    $scope.myForCliWr();
+    $scope.entradas = $scope.myForCel();
+
+    console.log($scope.entradas);
+  }
+
+  // --------------------
+
+  $scope.myForTur = function(){
+
+    return $scope.entradas.filter(function( obj ) {
+          return obj.turno == $scope.q.turnos;
+        });
+  }
+
+  $scope.myForTurWr = function(){
+
+    $scope.myForCelWr();
+    $scope.entradas = $scope.myForTur();
+    console.log($scope.entradas);
+  }
+
+  // --------------------
+
+  $scope.myForHor = function(){
+
+    return $scope.entradas.filter(function( obj ) {
+          return obj.horario == $scope.q.horarios;
+        });
+  }
+
+  $scope.myForHorWr = function(){
+
+    $scope.myForTurWr();
+    $scope.entradas = $scope.myForHor();
+    console.log($scope.entradas);
+  }
+
+  // --------------------
+
   $scope.loadQ = function(){
 
     console.log("loadQ");
 
     console.log("http://localhost:8888/rh_tristone/app/rest/rh_employees");
+    
     $http.get("rest/rh_employees").success(
       function (data) {
         console.log("loadQ");
+        $scope.entradasR = data;
         $scope.entradas = data;
+        
         console.log(data);
 
         $scope.clientes = ["Clientes"];
@@ -413,6 +601,24 @@ rh.controller('find', function($scope, rhData, $http, Excel, $timeout) {
             $scope.celulas.push($scope.entradas[i].celula);
           
         }
+
+        //$scope.entradas.forEach(function ({title: title, author: author}) {
+        //  console.log(title, 'is written by', author);
+        //});
+
+        /*
+        var strArea = "ENSAMBLE";
+        var result = $scope.entradas.filter(function( obj ) {
+          return obj.area == strArea;
+        });
+
+        console.log("for...");
+        console.log(result);
+
+        console.log(
+          $scope.myForArea()
+        );
+        */
 
       }
     );
@@ -557,6 +763,11 @@ rh.controller('find', function($scope, rhData, $http, Excel, $timeout) {
 
 
 });
+
+
+
+
+
 
 rh.controller('home', function($scope, rhData, $http) {
 

@@ -6,6 +6,8 @@ $app = new Slim();
 
 $app->get('/areas', 'getAreas');
 
+$app->get('/add/area/:nom', 'setArea');
+
 $app->get('/add/cliente/:area/:cli', 'addCli');
 
 $app->get('/add/celula/:cli/:cel', 'addCel');
@@ -62,6 +64,23 @@ $app->delete('/wines/:id',	'deleteWine');
 
 
 $app->run();
+
+
+function setArea($nom)
+{
+        $sql = "INSERT INTO `rh_tristone`.`areas` (`area`) VALUES ('". $nom ."');";
+        try {
+		
+				$db = getConnection();	
+				$stmt = $db->prepare($sql);  
+				$stmt->execute();
+				$db = null;
+				echo '{"msg":"Save Ok, refresh for changes"}';
+
+        } catch(PDOException $e) {
+                echo '{"error":{"text":'. $e->getMessage() . ' ' . $sql . ' }}'; 
+        } 
+}
 
 
 
@@ -751,7 +770,7 @@ function getConnection() {
 	
 	
 	$dbuser="root";
-	$dbpass="toor";
+	$dbpass="root";
 	$dbname="rh_tristone";
 	$dbhost="localhost";
 	
