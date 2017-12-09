@@ -26,7 +26,7 @@ CREATE TABLE `areas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `area` varchar(145) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,7 +53,7 @@ CREATE TABLE `celulas` (
   PRIMARY KEY (`id`,`clientes_id`),
   KEY `fk_celulas_clientes1_idx` (`clientes_id`),
   CONSTRAINT `fk_celulas_clientes1` FOREIGN KEY (`clientes_id`) REFERENCES `clientes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=125 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `celulas` (
 
 LOCK TABLES `celulas` WRITE;
 /*!40000 ALTER TABLE `celulas` DISABLE KEYS */;
-INSERT INTO `celulas` VALUES (1,'Celula 4',1),(2,'Celula 2',1),(3,'Celula 1',1),(4,'Celula 3',1),(5,'CEL 1',2),(6,'CEL 2',2),(7,'CEL 3',2),(8,'CEL 4',2),(9,'CEL 5',2),(10,'CEL 6',2),(11,'CEL 7',2),(12,'CEL 8',2),(13,'Operadores Cargadores',3),(14,'Entrenador',3),(15,'Lider',3),(16,'Lavador',3),(17,'Trimer',3),(18,'Lavador de guantes',3),(19,'Surtidor',3),(20,'Estampado',3),(21,'Materilistas de estampado',3),(22,'Lider de estampado',3);
+INSERT INTO `celulas` VALUES (1,'Celula 4',1),(2,'Celula 2',1),(3,'Celula 1',1),(4,'Celula 3',1),(5,'CEL 1',2),(6,'CEL 2',2),(7,'CEL 3',2),(8,'CEL 4',2),(9,'CEL 5',2),(10,'CEL 6',2),(11,'CEL 7',2),(12,'CEL 8',2),(14,'Entrenador',3),(15,'Lider',3),(16,'Lavador',3),(17,'Trimer',3),(18,'Lavador de guantes',3),(19,'Surtidor',3),(20,'Estampado',3),(21,'Materilistas de estampado',3),(22,'Lider de estampado',3),(23,'Lider',1),(24,'Lider',2),(25,'CEL 1',7),(26,'CEL 2',7),(27,'CEL 3',7),(28,'CEL 4',7),(29,'Lider',7),(30,'K2XX Celula 1',11),(31,'K2XX Celula 2',11),(32,'K2XX Celula 3',11),(33,'K2XX Celula 4',11),(34,'Engel',11),(35,'Estampado',11),(36,'Lider',11),(37,'Lider',10),(38,'CEL1',10),(39,'CEL2',10),(40,'D2U Celula 1',12),(41,'D2U Celula 2',12),(42,'D2U Celula 3',12),(43,'D2U Celula 4',12),(44,'D2U Celula 5',12),(45,'D2U Celula 6',12),(46,'D2U Celula 7',12),(47,'D2U Celula 8',12),(48,'D2U Celula 9',12),(49,'D2U Celula 10',12),(50,'D2U Celula 11',12),(51,'Engel',12),(52,'Estampado',12),(53,'Scrap',12),(54,'Lider',12),(55,'C1YX Celula 1',13),(56,'C1YX Celula 2',13),(57,'C1YX Celula 3',13),(58,'C1YX Celula 4',13),(59,'Corte de malla',13),(60,'Lider',13),(61,'Horno 1',14),(62,'Horno 2',14),(63,'Lider',14),(64,'Rutil 1',26),(65,'Rutil 2',26),(66,'Rutil 3',26),(67,'Capturista',26),(68,'Scrap',26),(69,'C346',9),(70,'C520-L3',9),(71,'Lider',9),(72,'Lider',8),(73,'6.4',8),(74,'3.6-3.0',8),(75,'Operadores Cargadores',4),(76,'Entrenador',4),(77,'Lider',4),(78,'Lavador',4),(79,'Trimer',4),(80,'Surtidor',4),(81,'Estampado',4),(82,'Materilistas de estampado',4),(83,'Lider de estampado',4),(84,'Operadores Cargadores',15),(85,'Entrenador',15),(86,'Lider',15),(87,'Lavador',15),(88,'Trimer',15),(89,'Surtidor',15),(90,'Estampado',15),(91,'Materilistas de estampado',15),(92,'Lider de estampado',15),(93,'Operadores Cargadores',16),(94,'Entrenador',16),(95,'Lider',16),(96,'Lavador',16),(97,'Trimer',16),(98,'Surtidor',16),(99,'Estampado',16),(100,'Materilistas de estampado',16),(101,'Lider de estampado',16),(102,'Operadores Cargadores',17),(103,'Entrenador',17),(104,'Lider',17),(105,'Lavador',17),(106,'Trimer',17),(107,'Surtidor',17),(108,'Estampado',17),(109,'Materilistas de estampado',17),(110,'Conteos Cíclicos, surtidores',17),(111,'Acreditar SAP',17),(112,'Lider de estampado',17),(113,'Ajustador',5),(114,'Lider',5),(115,'Retrabajos',5),(116,'Materilalista',5),(117,'Ajustador',6),(118,'Lider',6),(119,'Retrabajos',6),(120,'Materilalista',6),(121,'Ajustador',23),(122,'Lider',23),(123,'Retrabajos',23),(124,'Materilalista',23);
 /*!40000 ALTER TABLE `celulas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ CREATE TABLE `clientes` (
   PRIMARY KEY (`id`,`areas_id`),
   KEY `fk_cliente_areas1_idx` (`areas_id`),
   CONSTRAINT `fk_cliente_areas1` FOREIGN KEY (`areas_id`) REFERENCES `areas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,7 +89,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
-INSERT INTO `clientes` VALUES (1,'BMW',1),(2,'VW',1),(3,'POT 1',2),(4,'POT 2',2),(5,'Linea 1',3),(6,'Linea 2',3),(7,'BSUV',1),(8,'FCA',1),(9,'FORD',1),(10,'VN 127',1),(11,'K2XX',1),(12,'D2U',1),(13,'C1YX',1),(14,'Horno / Rutil',1),(15,'POT 3',2),(16,'POT 4',2),(17,'POT 5',2),(18,'Estampado 1',2),(19,'Estampado 2',2),(20,'Estampado 3',2),(21,'Estampado 4',2),(22,'Estampado 5',2),(23,'Linea 3',3),(24,'Materialistas',3),(25,'Retrabajos',3);
+INSERT INTO `clientes` VALUES (1,'BMW',1),(2,'VW',1),(3,'POT 1',2),(4,'POT 2',2),(5,'Linea 1',3),(6,'Linea 2',3),(7,'BSUV',1),(8,'FCA',1),(9,'FORD',1),(10,'VN 127',1),(11,'K2XX',1),(12,'D2U',1),(13,'C1YX',1),(14,'Horno',1),(15,'POT 3',2),(16,'POT 4',2),(17,'POT 5',2),(23,'Linea 3',3),(26,'Rutil',1);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +113,7 @@ CREATE TABLE `emp_hr_cel` (
   CONSTRAINT `fk_emp_hr_cel_celulas1` FOREIGN KEY (`celulas_id`) REFERENCES `celulas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_emp_hr_cel_employees1` FOREIGN KEY (`employees_id`) REFERENCES `employees` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_emp_hr_cel_horarios1` FOREIGN KEY (`horarios_id`) REFERENCES `horarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,6 @@ CREATE TABLE `emp_hr_cel` (
 
 LOCK TABLES `emp_hr_cel` WRITE;
 /*!40000 ALTER TABLE `emp_hr_cel` DISABLE KEYS */;
-INSERT INTO `emp_hr_cel` VALUES (4,1,1,15,NULL),(6,1,1,13,NULL),(12,1,1,14,NULL),(18,2,1,28,'test2');
 /*!40000 ALTER TABLE `emp_hr_cel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -348,4 +347,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-25  9:52:16
+-- Dump completed on 2017-12-09 12:27:17
